@@ -1,13 +1,14 @@
 import { Body, Controller, Get, Param, Post, Res, HttpException, HttpStatus } from '@nestjs/common';
 import { AppService } from './app.service';
 import { Response } from 'express';
+import { MensagemDto } from './interfaces/mensagem.interface';
 
 @Controller('api')
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Post('notificar')
-  async notificar(@Body() body: { conteudoMensagem: string }, @Res() res: Response) {
+  async notificar(@Body() body: MensagemDto, @Res() res: Response) {
     try {
       const { mensagemId } = await this.appService.notificar(body);
       return res.status(202).json({ mensagem: 'Mensagem recebida', mensagemId });
