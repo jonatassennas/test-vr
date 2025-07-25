@@ -10,7 +10,7 @@ export class RabbitMQService implements OnModuleInit {
 
   async onModuleInit() {
     try {
-      const connection = await amqp.connect('amqp://guest:guest@localhost:5672');
+      const connection = await amqp.connect(process.env.RABBITMQ_URL || 'amqp://guest:guest@rabbitmq:5672');
       this.channel = await connection.createChannel();
 
       await this.consumerService.startConsuming(this.channel);
